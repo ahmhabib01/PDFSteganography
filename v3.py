@@ -1,172 +1,217 @@
-import PyPDF4
-import os
-import random
-import string
-import hashlib
-from fpdf import FPDF
-import base64
-from datetime import datetime
-import sys
-import zipfile
-import qrcode
-from PIL import Image
-import io
-import json
-
-class PDFSteganographyPro:
-    def __init__(self):
-        self.version = "3.0"
-        self.author = "Ahsan Habib"
-        self.contact = "https://www.facebook.com/ahm.habib.39"
-        
-    def generate_stealth_filename(self, prefix="doc", length=16):
-        """Generate stealth filename that looks legitimate"""
-        extensions = [".pdf", ".doc", ".xlsx", ".invoice", ".report", ".statement"]
-        chars = string.ascii_lowercase + string.digits
-        random_name = ''.join(random.choice(chars) for _ in range(length))
-        return f"{prefix}_{random_name}{random.choice(extensions)}"
-    
-    def create_qr_code(self, data, size=10):
-        """Generate QR code from data"""
-        qr = qrcode.QRCode(version=1, box_size=size, border=4)
-        qr.add_data(data)
-        qr.make(fit=True)
-        img = qr.make_image(fill_color="black", back_color="white")
-        return img
-    
-    def embed_qr_in_pdf(self, pdf_path, qr_data):
-        """Embed QR code in PDF"""
-        # Implementation for QR embedding
-        pass
-    
-    def encrypt_data(self, data, key=None):
-        """Simple XOR encryption for data"""
-        if not key:
-            key = os.urandom(len(data))
-        encrypted = bytes([data[i] ^ key[i % len(key)] for i in range(len(data))])
-        return encrypted, key
-    
-    def create_malicious_macro_pdf(self):
-        """Create PDF with embedded macro-like functionality"""
-        # Advanced PDF with interactive elements
-        pass
-    
-    def generate_fake_metadata(self):
-        """Generate convincing fake metadata"""
-        companies = ["Microsoft", "Google", "Adobe", "SecurityTeam", "ITDepartment"]
-        authors = ["Security Update", "IT Support", "Admin", "System"]
-        titles = ["Security Patch", "Important Update", "Document Verification", "Invoice"]
-        
-        return {
-            "author": random.choice(authors),
-            "title": random.choice(titles),
-            "subject": f"{random.choice(companies)} Security Notification",
-            "creator": "PDF Generator Pro",
-            "producer": "Adobe PDF Library 15.0"
-        }
-    
-    def create_advanced_phishing_pdf(self, link, template="security"):
-        """Create highly convincing phishing PDF"""
-        pdf = FPDF()
-        pdf.add_page()
-        
-        templates = {
-            "security": {
-                "title": "SECURITY ALERT - Immediate Action Required",
-                "content": "Your system has been flagged for critical security vulnerabilities. Click the link below to download essential security patches.",
-                "urgency": "HIGH PRIORITY"
-            },
-            "invoice": {
-                "title": "INVOICE - Payment Required",
-                "content": "Your recent subscription requires payment verification. Click to review and process your invoice.",
-                "urgency": "URGENT"
-            },
-            "update": {
-                "title": "SOFTWARE UPDATE AVAILABLE",
-                "content": "New version update ready for installation. Click to download and install the latest features.",
-                "urgency": "RECOMMENDED"
-            }
-        }
-        
-        template_data = templates.get(template, templates["security"])
-        
-        # Header with urgency
-        pdf.set_font("Courier", 'B', 18)
-        pdf.set_text_color(255, 0, 0)  # Red for urgency
-        pdf.cell(200, 15, txt=template_data["urgency"], ln=1, align='C')
-        pdf.set_text_color(0, 0, 0)
-        
-        # Main title
-        pdf.set_font("Courier", 'B', 16)
-        pdf.cell(200, 12, txt=template_data["title"], ln=1, align='C')
-        
-        # Content
-        pdf.set_font("Courier", size=12)
-        pdf.ln(8)
-        pdf.multi_cell(0, 8, txt=template_data["content"])
-        pdf.ln(12)
-        
-        # Link section
-        pdf.set_text_color(0, 0, 255)
-        pdf.set_font("Courier", 'U', 14)
-        pdf.cell(200, 12, txt="CLICK HERE TO PROCEED", border=1, ln=1, align='C', link=link)
-        pdf.set_text_color(0, 0, 0)
-        
-        # Footer with timestamp
-        pdf.set_font("Courier", 'I', 10)
-        pdf.cell(200, 8, txt=f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}", ln=1, align='C')
-        
-        filename = self.generate_stealth_filename()
-        pdf.output(filename)
-        return filename
-
-def print_ultimate_banner():
-    banner = """
-╔══════════════════════════════════════════════════════════════════════════════╗
-║                                                                              ║
-║  ██████╗ ██████╗ ███████╗██████╗ ███████╗████████╗███████╗ ██████╗ ██████╗  ║
-║  ██╔══██╗██╔══██╗██╔════╝██╔══██╗██╔════╝╚══██╔══╝██╔════╝██╔════╝██╔═══██╗ ║
-║  ██████╔╝██████╔╝█████╗  ██║  ██║█████╗     ██║   █████╗  ██║     ██║   ██║ ║
-║  ██╔═══╝ ██╔══██╗██╔══╝  ██║  ██║██╔══╝     ██║   ██╔══╝  ██║     ██║   ██║ ║
-║  ██║     ██║  ██║███████╗██████╔╝███████╗   ██║   ███████╗╚██████╗╚██████╔╝ ║
-║  ╚═╝     ╚═╝  ╚═╝╚══════╝╚═════╝ ╚══════╝   ╚═╝   ╚══════╝ ╚═════╝ ╚═════╝  ║
-║                                                                              ║
-║                   ADVANCED STEGANOGRAPHY & SECURITY SUITE                   ║
-║                                                                              ║
-╠══════════════════════════════════════════════════════════════════════════════╣
-║  🔥 CREATED BY: AHSAN HABIB                                                 ║
-║  📞 CONTACT: https://www.facebook.com/ahm.habib.39                          ║
-║  🌐 VERSION: 3.0 - NEPTUNE EDITION                                          ║
-║                                                                              ║
-║  ╭──────────────────────────────────────────────────────────────────────────╮ ║
-║  │ 🎯 FEATURES                                                             │ ║
-║  │ • Multi-Layer Steganography                                             │ ║
-║  │ • QR Code Injection                                                     │ ║
-║  │ • Advanced Phishing Templates                                           │ ║
-║  │ • Metadata Manipulation                                                 │ ║
-║  │ • Stealth File Generation                                               │ ║
-║  │ • Real-time Obfuscation                                                 │ ║
-║  │ • Social Engineering Modules                                            │ ║
-║  │ • Forensic Analysis Tools                                               │ ║
-║  ╰──────────────────────────────────────────────────────────────────────────╯ ║
-║                                                                              ║
-║  [⚠️]  FOR SECURITY RESEARCH & EDUCATIONAL PURPOSES ONLY                    ║
-║  [🔒]  USE RESPONSIBLY AND ETHICALLY                                        ║
-║                                                                              ║
-╚══════════════════════════════════════════════════════════════════════════════╝
+#!/usr/bin/env python3
 """
-    print(banner)
+PDF Steganography Tool
+Hide and extract secret messages in PDF files
+"""
 
-def demonstrate_advanced_features():
-    """Showcase the tool's advanced capabilities"""
-    print("\n" + "🎆" * 40)
-    print("🚀 WELCOME TO PDFSTEGANOGRAPHY PRO - THE ULTIMATE TOOL")
-    print("🎆" * 40)
-    print("""
-    🌟 MIND-BLOWING CAPABILITIES:
+import argparse
+import os
+import sys
+from PyPDF2 import PdfReader, PdfWriter
+import zlib
+import base64
+
+# Fix the email import issue
+try:
+    from email.mime.text import MIMEText
+    from email.mime.multipart import MIMEMultipart
+    from email.mime.base import MIMEBase
+    from email import encoders
+except ImportError as e:
+    print(f"Email import error: {e}")
+    sys.exit(1)
+
+class PDFSteganography:
+    def __init__(self):
+        self.metadata_key = "/Keywords"
     
-    • STEALTH MODE: Generate files with legitimate-looking names
-    • MULTI-PAYLOAD: Embed multiple files in single PDF
-    • QR INJECTION: Hide data in QR codes within documents
-    • METADATA MANIPULATION: Fake author, company, and creation dates
-    • ADVANCED
+    def hide_message(self, pdf_path, message, output_path=None):
+        """
+        Hide a message in PDF metadata
+        """
+        try:
+            # Read the original PDF
+            reader = PdfReader(pdf_path)
+            writer = PdfWriter()
+            
+            # Copy all pages
+            for page in reader.pages:
+                writer.add_page(page)
+            
+            # Encode the message
+            encoded_message = base64.b64encode(
+                zlib.compress(message.encode('utf-8'))
+            ).decode('utf-8')
+            
+            # Add metadata with hidden message
+            writer.add_metadata({
+                self.metadata_key: encoded_message,
+                "/Producer": "PDF Steganography Tool",
+                "/Title": "Document"
+            })
+            
+            # Set output path
+            if output_path is None:
+                base_name = os.path.splitext(pdf_path)[0]
+                output_path = f"{base_name}_hidden.pdf"
+            
+            # Save the new PDF
+            with open(output_path, 'wb') as output_file:
+                writer.write(output_file)
+            
+            print(f"Message hidden successfully in: {output_path}")
+            return output_path
+            
+        except Exception as e:
+            print(f"Error hiding message: {e}")
+            return None
+    
+    def extract_message(self, pdf_path):
+        """
+        Extract hidden message from PDF metadata
+        """
+        try:
+            reader = PdfReader(pdf_path)
+            metadata = reader.metadata
+            
+            if self.metadata_key in metadata:
+                encoded_message = metadata[self.metadata_key]
+                
+                # Decode the message
+                decoded_message = zlib.decompress(
+                    base64.b64decode(encoded_message)
+                ).decode('utf-8')
+                
+                return decoded_message
+            else:
+                print("No hidden message found in PDF metadata")
+                return None
+                
+        except Exception as e:
+            print(f"Error extracting message: {e}")
+            return None
+    
+    def hide_in_text(self, pdf_path, message, output_path=None):
+        """
+        Advanced: Hide message in PDF text content (basic implementation)
+        """
+        try:
+            reader = PdfReader(pdf_path)
+            writer = PdfWriter()
+            
+            # Simple text-based steganography
+            # This is a basic implementation - real implementation would be more sophisticated
+            encoded_message = base64.b64encode(message.encode()).decode()
+            
+            for page in reader.pages:
+                writer.add_page(page)
+            
+            # Add message as custom metadata
+            writer.add_metadata({
+                "/HiddenData": encoded_message,
+                "/Producer": "Advanced PDF Steganography"
+            })
+            
+            if output_path is None:
+                base_name = os.path.splitext(pdf_path)[0]
+                output_path = f"{base_name}_advanced_hidden.pdf"
+            
+            with open(output_path, 'wb') as output_file:
+                writer.write(output_file)
+            
+            print(f"Advanced message hidden in: {output_path}")
+            return output_path
+            
+        except Exception as e:
+            print(f"Error in advanced hiding: {e}")
+            return None
+
+def main():
+    parser = argparse.ArgumentParser(description='PDF Steganography Tool')
+    parser.add_argument('action', choices=['hide', 'extract', 'hide_advanced'], 
+                       help='Action to perform')
+    parser.add_argument('--input', '-i', required=True, help='Input PDF file')
+    parser.add_argument('--output', '-o', help='Output PDF file')
+    parser.add_argument('--message', '-m', help='Message to hide')
+    
+    args = parser.parse_args()
+    
+    stego = PDFSteganography()
+    
+    if args.action == 'hide':
+        if not args.message:
+            print("Error: Message is required for hide action")
+            sys.exit(1)
+        
+        result = stego.hide_message(args.input, args.message, args.output)
+        if not result:
+            sys.exit(1)
+    
+    elif args.action == 'hide_advanced':
+        if not args.message:
+            print("Error: Message is required for hide_advanced action")
+            sys.exit(1)
+        
+        result = stego.hide_in_text(args.input, args.message, args.output)
+        if not result:
+            sys.exit(1)
+    
+    elif args.action == 'extract':
+        message = stego.extract_message(args.input)
+        if message:
+            print(f"Extracted message: {message}")
+        else:
+            sys.exit(1)
+
+def test_functionality():
+    """
+    Test the PDF steganography functionality
+    """
+    print("Testing PDF Steganography...")
+    
+    # Create a simple test PDF first (you'll need an existing PDF file)
+    test_pdf = "test.pdf"
+    
+    # If test PDF doesn't exist, create a simple one
+    if not os.path.exists(test_pdf):
+        try:
+            from reportlab.pdfgen import canvas
+            from reportlab.lib.pagesizes import letter
+            
+            c = canvas.Canvas(test_pdf, pagesize=letter)
+            c.drawString(100, 750, "Test PDF for Steganography")
+            c.drawString(100, 730, "This is a test document.")
+            c.save()
+            print("Created test PDF file")
+        except ImportError:
+            print("ReportLab not installed. Please provide an existing PDF file.")
+            return
+    
+    stego = PDFSteganography()
+    
+    # Test hiding message
+    test_message = "This is a secret message!"
+    print(f"Hiding message: {test_message}")
+    
+    output_pdf = stego.hide_message(test_pdf, test_message, "test_hidden.pdf")
+    
+    if output_pdf:
+        # Test extracting message
+        extracted = stego.extract_message(output_pdf)
+        if extracted:
+            print(f"Extracted message: {extracted}")
+            if extracted == test_message:
+                print("✓ Test passed! Message successfully hidden and extracted.")
+            else:
+                print("✗ Test failed! Extracted message doesn't match.")
+        else:
+            print("✗ Failed to extract message")
+    else:
+        print("✗ Failed to hide message")
+
+if __name__ == "__main__":
+    if len(sys.argv) == 1:
+        # No arguments provided, run test
+        test_functionality()
+    else:
+        main()
